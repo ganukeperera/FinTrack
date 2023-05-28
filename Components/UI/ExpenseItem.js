@@ -5,7 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 export default function ExpenseItem({ title, subTitle, value }) {
   const navigation = useNavigation();
   function updateHandler() {
-    navigation.navigate("UpdateExpense");
+    navigation.navigate("ManageExpense");
   }
   return (
     <View style={styles.container}>

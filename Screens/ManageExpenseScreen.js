@@ -3,7 +3,7 @@ import PrimaryButton from "../Components/UI/PrimaryButton";
 import { Colors } from "../util/Colors";
 import IconButton from "../Components/UI/IconButton";
 
-export default function UpdateExpenseScreen({ navigation }) {
+export default function ManageExpenseScreen({ navigation }) {
   function cancelHandler() {
     navigation.goBack();
   }

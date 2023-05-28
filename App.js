@@ -5,14 +5,11 @@ import * as SplashScreen from "expo-splash-screen";
 import { useCallback } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "./util/Colors";
-import IconButton from "./Components/UI/IconButton";
 import store from "./store/store";
 import { Provider } from "react-redux";
 import TabNavigationHandler from "./Screens/TabNavigationHandler";
-import AddExpenseScreen from "./Screens/AddExpenseScreen";
-import UpdateExpenseScreen from "./Screens/UpdateExpenseScreen";
+import UpdateExpenseScreen from "./Screens/ManageExpenseScreen";
 
 export default function App() {
   SplashScreen.preventAutoHideAsync();
@@ -50,13 +47,11 @@ export default function App() {
               }}
             ></Stack.Screen>
             <Stack.Screen
-              name="AddExpense"
-              component={AddExpenseScreen}
-              options={{ presentation: "modal" }}
-            ></Stack.Screen>
-            <Stack.Screen
-              name="UpdateExpense"
+              name="ManageExpense"
               component={UpdateExpenseScreen}
+              options={{
+                presentation: "modal",
+              }}
             ></Stack.Screen>
           </Stack.Navigator>
         </NavigationContainer>
