@@ -38,6 +38,8 @@ export default function App() {
             initialRouteName="TabScreen"
             screenOptions={{
               contentStyle: { backgroundColor: Colors.primary800 },
+              headerStyle: { backgroundColor: Colors.primary500 },
+              headerTintColor: "white",
             }}
           >
             <Stack.Screen
@@ -50,6 +52,7 @@ export default function App() {
             <Stack.Screen
               name="AddExpense"
               component={AddExpenseScreen}
+              options={{ presentation: "modal" }}
             ></Stack.Screen>
             <Stack.Screen
               name="UpdateExpense"

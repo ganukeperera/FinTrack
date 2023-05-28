@@ -1,10 +1,9 @@
-import { View, Text, StyleSheet, FlatList } from "react-native";
+import { View, StyleSheet, FlatList } from "react-native";
 import { Colors } from "../util/Colors";
-import HeaderCard from "../Components/UI/HeaderCard";
-import ExpenseItem from "../Components/UI/ExpenseItem";
+import ExpensesOutput from "../Components/UI/ExpensesOutput";
 
 //adding dummyData
-const DummyData = [
+export const DummyData = [
   {
     id: "e1",
     description: "A pair of trousers",
@@ -50,30 +49,11 @@ const DummyData = [
 ];
 
 const recentExpenses = DummyData;
-const totalExpenses = recentExpenses.reduce((sum, expense) => {
-  return sum + expense.amount;
-}, 0);
 
 export default function RecentExpensesScreen() {
   return (
     <View style={styles.container}>
-      <HeaderCard
-        titleLeft="Last 7 Days"
-        titleRight={"$" + totalExpenses}
-      ></HeaderCard>
-      <View style={styles.listContainer}>
-        <FlatList
-          data={recentExpenses}
-          renderItem={(itemData) => (
-            <ExpenseItem
-              title={itemData.item.description}
-              subTitle="2020" //{itemData.item.date.toString}
-              value={itemData.item.amount}
-            ></ExpenseItem>
-          )}
-          keyExtractor={(item) => item.id}
-        ></FlatList>
-      </View>
+      <ExpensesOutput expenses={recentExpenses} expensesPeriod="Last 7 Days" />
     </View>
   );
 }

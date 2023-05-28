@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, Pressable } from "react-native";
 import { Colors } from "../../util/Colors";
 import { useNavigation } from "@react-navigation/native";
 
-export default function ExpenseItem({ title, subTitle, value, onPress }) {
+export default function ExpenseItem({ title, subTitle, value }) {
   const navigation = useNavigation();
   function updateHandler() {
     navigation.navigate("UpdateExpense");
@@ -23,7 +23,7 @@ export default function ExpenseItem({ title, subTitle, value, onPress }) {
         </View>
         <View style={styles.valueOuterContainer}>
           <View style={styles.valueContainer}>
-            <Text style={styles.valueText}>{value}</Text>
+            <Text style={styles.valueText}>{value.toFixed(2)}</Text>
           </View>
         </View>
       </Pressable>

@@ -1,16 +1,17 @@
-import { FlatList, View, StyleSheet } from "react-native";
-import { ExpenseItem } from "./ExpenseItem";
+import { View, FlatList, StyleSheet } from "react-native";
+import ExpenseItem from "./ExpenseItem";
+import { getFormattedDate } from "../../util/date";
 
-export default function ExpenseList({ data }) {
+export default function ExpenseList({ expenseData }) {
   return (
-    <View style={styles.container}>
+    <View style={styles.listContainer}>
       <FlatList
-        data={data}
+        data={expenseData}
         renderItem={(itemData) => (
           <ExpenseItem
             title={itemData.item.description}
-            subTitle="2020" //{itemData.item.date.toString}
-            value={itemData.item.amout}
+            subTitle={getFormattedDate(itemData.item.date)}
+            value={itemData.item.amount}
           ></ExpenseItem>
         )}
         keyExtractor={(item) => item.id}
@@ -20,7 +21,8 @@ export default function ExpenseList({ data }) {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  listContainer: {
     flex: 1,
+    marginTop: 5,
   },
 });
