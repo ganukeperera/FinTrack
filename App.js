@@ -4,14 +4,15 @@ import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { useCallback } from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import AllExpensesScreen from "./Screens/AllExpensesScreen";
-import RecentExpensesScreen from "./Screens/RecentExpensesScreen";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "./util/Colors";
 import IconButton from "./Components/UI/IconButton";
 import store from "./store/store";
 import { Provider } from "react-redux";
+import TabNavigationHandler from "./Screens/TabNavigationHandler";
+import AddExpenseScreen from "./Screens/AddExpenseScreen";
+import UpdateExpenseScreen from "./Screens/UpdateExpenseScreen";
 
 export default function App() {
   SplashScreen.preventAutoHideAsync();
@@ -26,44 +27,35 @@ export default function App() {
     }
   }, [isFontsLoaded]);
 
-  const Tabs = createBottomTabNavigator();
+  const Stack = createNativeStackNavigator();
   return (
     <View style={styles.container} onLayout={onLayoutRootView}>
       <StatusBar style="light"></StatusBar>
 
       <Provider store={store}>
         <NavigationContainer>
-          <Tabs.Navigator
+          <Stack.Navigator
+            initialRouteName="TabScreen"
             screenOptions={{
-              headerTintColor: "white",
-              headerStyle: { backgroundColor: Colors.primary500 },
-              tabBarStyle: { backgroundColor: Colors.primary500 },
-              tabBarActiveTintColor: Colors.accent500,
-              tabBarInactiveTintColor: "white",
-              headerRight: () => <IconButton name="add" color="white" />,
+              contentStyle: { backgroundColor: Colors.primary800 },
             }}
           >
-            <Tabs.Screen
-              name="RecentExpenses"
-              component={RecentExpensesScreen}
+            <Stack.Screen
+              name="TabScreen"
+              component={TabNavigationHandler}
               options={{
-                title: "Recent Expenses",
-                tabBarIcon: ({ size, color }) => (
-                  <Ionicons name="time-outline" size={size} color={color} />
-                ),
+                headerShown: false,
               }}
-            ></Tabs.Screen>
-            <Tabs.Screen
-              name="AllExpenses"
-              component={AllExpensesScreen}
-              options={{
-                title: "All Expenses",
-                tabBarIcon: ({ size, color }) => (
-                  <Ionicons name="list" size={size} color={color} />
-                ),
-              }}
-            ></Tabs.Screen>
-          </Tabs.Navigator>
+            ></Stack.Screen>
+            <Stack.Screen
+              name="AddExpense"
+              component={AddExpenseScreen}
+            ></Stack.Screen>
+            <Stack.Screen
+              name="UpdateExpense"
+              component={UpdateExpenseScreen}
+            ></Stack.Screen>
+          </Stack.Navigator>
         </NavigationContainer>
       </Provider>
     </View>

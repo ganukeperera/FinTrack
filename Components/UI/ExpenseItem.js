@@ -1,18 +1,32 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Pressable } from "react-native";
 import { Colors } from "../../util/Colors";
+import { useNavigation } from "@react-navigation/native";
 
-export default function ExpenseItem({ title, subTitle, value }) {
+export default function ExpenseItem({ title, subTitle, value, onPress }) {
+  const navigation = useNavigation();
+  function updateHandler() {
+    navigation.navigate("UpdateExpense");
+  }
   return (
     <View style={styles.container}>
-      <View style={styles.titlesContainer}>
-        <Text style={styles.titleText}>{title}</Text>
-        <Text style={styles.subTitleText}>{subTitle}</Text>
-      </View>
-      <View style={styles.valueOuterContainer}>
-        <View style={styles.valueContainer}>
-          <Text style={styles.valueText}>{value}</Text>
+      <Pressable
+        style={({ pressed }) =>
+          pressed
+            ? [styles.pressNormal, styles.pressPressed]
+            : styles.pressNormal
+        }
+        onPress={updateHandler}
+      >
+        <View style={styles.titlesContainer}>
+          <Text style={styles.titleText}>{title}</Text>
+          <Text style={styles.subTitleText}>{subTitle}</Text>
         </View>
-      </View>
+        <View style={styles.valueOuterContainer}>
+          <View style={styles.valueContainer}>
+            <Text style={styles.valueText}>{value}</Text>
+          </View>
+        </View>
+      </Pressable>
     </View>
   );
 }
@@ -20,17 +34,24 @@ export default function ExpenseItem({ title, subTitle, value }) {
 const styles = StyleSheet.create({
   container: {
     marginTop: 20,
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: Colors.primary500,
-    paddingHorizontal: 15,
-    paddingVertical: 8,
     borderRadius: 8,
     elevation: 4,
     shadowColor: "black",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.5,
     shadowRadius: 8,
+  },
+  pressNormal: {
+    paddingHorizontal: 15,
+    paddingVertical: 8,
+    backgroundColor: Colors.primary500,
+    flexDirection: "row",
+    alignItems: "center",
+    borderRadius: 8,
+    flex: 1,
+  },
+  pressPressed: {
+    opacity: 0.5,
   },
   titlesContainer: {
     flex: 3,
