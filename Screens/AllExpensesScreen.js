@@ -1,5 +1,4 @@
 import { View, Text, StyleSheet } from "react-native";
-import { Colors } from "../util/Colors";
 
 export default function AllExpensesScreen() {
   return (
@@ -10,7 +9,5 @@ export default function AllExpensesScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: Colors.primary800,
-  },
+  container: {},
 });

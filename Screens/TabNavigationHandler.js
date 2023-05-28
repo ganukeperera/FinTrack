@@ -1,5 +1,5 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import AllExpensesScreen from "./AddExpenseScreen";
+import AllExpensesScreen from "./AllExpensesScreen";
 import RecentExpensesScreen from "./RecentExpensesScreen";
 import IconButton from "../Components/UI/IconButton";
 import { Ionicons } from "@expo/vector-icons";
@@ -39,7 +39,7 @@ export default function TabNavigationHandler() {
         options={{
           title: "Recent Expenses",
           tabBarIcon: ({ size, color }) => (
-            <Ionicons name="time-outline" size={size} color={color} />
+            <Ionicons name="hourglass" size={size} color={color} />
           ),
         }}
       ></Tabs.Screen>
@@ -49,7 +49,7 @@ export default function TabNavigationHandler() {
         options={{
           title: "All Expenses",
           tabBarIcon: ({ size, color }) => (
-            <Ionicons name="list" size={size} color={color} />
+            <Ionicons name="calendar" size={size} color={color} />
           ),
         }}
       ></Tabs.Screen>
