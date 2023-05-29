@@ -2,12 +2,17 @@ import { View, StyleSheet } from "react-native";
 import { Colors } from "../util/Colors";
 import ExpensesOutput from "../Components/UI/ExpensesOutput";
 import { DummyData } from "./RecentExpensesScreen";
+import { useSelector } from "react-redux";
 
 export default function AllExpensesScreen() {
-  const recentExpenses = DummyData;
+  const recentExpenses = useSelector((store) => store.reducer.expenses);
   return (
     <View style={styles.container}>
-      <ExpensesOutput expenses={recentExpenses} expensesPeriod="Total" />
+      <ExpensesOutput
+        expenses={recentExpenses}
+        expensesPeriod="Total"
+        fallbackText="No expenses found!"
+      />
     </View>
   );
 }

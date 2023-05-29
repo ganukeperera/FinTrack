@@ -2,10 +2,10 @@ import { View, Text, StyleSheet, Pressable } from "react-native";
 import { Colors } from "../../util/Colors";
 import { useNavigation } from "@react-navigation/native";
 
-export default function ExpenseItem({ title, subTitle, value }) {
+export default function ExpenseItem({ id, title, subTitle, value }) {
   const navigation = useNavigation();
   function updateHandler() {
-    navigation.navigate("ManageExpense");
+    navigation.navigate("ManageExpense", { expenseId: id });
   }
   return (
     <View style={styles.container}>

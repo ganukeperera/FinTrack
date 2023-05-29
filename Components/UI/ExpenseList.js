@@ -1,6 +1,5 @@
 import { View, FlatList, StyleSheet } from "react-native";
 import ExpenseItem from "./ExpenseItem";
-import { getFormattedDate } from "../../util/date";
 
 export default function ExpenseList({ expenseData }) {
   return (
@@ -9,8 +8,9 @@ export default function ExpenseList({ expenseData }) {
         data={expenseData}
         renderItem={(itemData) => (
           <ExpenseItem
+            id={itemData.item.id}
             title={itemData.item.description}
-            subTitle={getFormattedDate(itemData.item.date)}
+            subTitle={itemData.item.date}
             value={itemData.item.amount}
           ></ExpenseItem>
         )}

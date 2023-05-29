@@ -6,7 +6,7 @@ import { useCallback } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Colors } from "./util/Colors";
-import store from "./store/store";
+import { store } from "./store/store";
 import { Provider } from "react-redux";
 import TabNavigationHandler from "./Screens/TabNavigationHandler";
 import UpdateExpenseScreen from "./Screens/ManageExpenseScreen";
