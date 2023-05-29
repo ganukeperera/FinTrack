@@ -5,6 +5,7 @@ import IconButton from "../Components/UI/IconButton";
 import { useLayoutEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { removeExpense } from "../store/expense";
+import ExpenseForm from "../Components/ManageExpense/ExpenseForm";
 
 export default function ManageExpenseScreen({ route, navigation }) {
   const editedExpenseId = route.params?.expenseId;
@@ -39,6 +40,7 @@ export default function ManageExpenseScreen({ route, navigation }) {
 
   return (
     <View style={styles.container}>
+      <ExpenseForm></ExpenseForm>
       <View style={styles.buttonsOuterContainer}>
         <View style={styles.buttonContainer}>
           <PrimaryButton bgColor={Colors.primary800} onPress={cancelHandler}>
