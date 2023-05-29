@@ -11,7 +11,7 @@ export default function TabNavigationHandler() {
 
   const navigation = useNavigation();
   function addExpenseHandler() {
-    navigation.navigate("AddExpense");
+    navigation.navigate("ManageExpense");
   }
 
   return (
