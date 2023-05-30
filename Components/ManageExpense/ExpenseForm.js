@@ -4,35 +4,68 @@ import { useState } from "react";
 import PrimaryButton from "../UI/PrimaryButton";
 import { Colors } from "../../util/Colors";
 import { useNavigation } from "@react-navigation/native";
-import { useDispatch, useSelector } from "react-redux";
-import { addExpense, updateExpense } from "../../store/expense";
 
-export default function ExpenseForm({ submitBtnTitle, onSubmit, onCancel }) {
-  const [expenseAmount, setAmount] = useState("");
-  const [expenseDate, setExpenseDate] = useState("");
-  const [expenseDescription, setExpenseDescription] = useState("");
+export default function ExpenseForm({
+  submitBtnTitle,
+  onSubmit,
+  onCancel,
+  defaultValues,
+}) {
+  const [expenseAmount, setAmount] = useState({
+    amount: defaultValues ? defaultValues.amount.toString() : "",
+    isValid: true,
+  });
+  const [expenseDate, setExpenseDate] = useState({
+    date: defaultValues ? defaultValues.date : "",
+    isValid: true,
+  });
+  const [expenseDescription, setExpenseDescription] = useState({
+    description: defaultValues ? defaultValues.description : "",
+    isValid: true,
+  });
 
-  const dispatch = useDispatch();
+  const [formIsValid, setFormIsValid] = useState(true);
 
   function amountHandler(amount) {
-    setAmount(amount);
+    setAmount({ amount: amount, isValid: true });
   }
   function dateHandler(date) {
-    setExpenseDate(date);
+    setExpenseDate({ date: date, isValid: true });
   }
   function descriptionHandler(desciption) {
-    setExpenseDescription(desciption);
+    setExpenseDescription({ description: desciption, isValid: true });
   }
 
   const navigation = useNavigation();
-  console.log(submitBtnTitle);
   function confirmHandler() {
     const expense = {
-      description: expenseDescription,
-      amount: +expenseAmount,
-      date: expenseDate,
+      description: expenseDescription.description,
+      amount: +expenseAmount.amount,
+      date: expenseDate.date,
     };
-    onSubmit(expense);
+
+    const amountIsValid = !isNaN(expense.amount) && expense.amount > 0;
+    const dateIsValid = new Date(expense.date).toString() !== "Invalid Date";
+    const descriptionIsValid = expense.description.trim().length > 0;
+
+    if (!amountIsValid || !dateIsValid || !descriptionIsValid) {
+      setFormIsValid(false);
+      setAmount((curValue) => {
+        return { amount: curValue.amount, isValid: amountIsValid };
+      });
+      setExpenseDescription((curValue) => {
+        return {
+          description: curValue.description,
+          isValid: descriptionIsValid,
+        };
+      });
+      setExpenseDate((curValue) => {
+        return { date: curValue.date, isValid: dateIsValid };
+      });
+    } else {
+      setFormIsValid(true);
+      onSubmit(expense);
+    }
   }
 
   return (
@@ -42,22 +75,24 @@ export default function ExpenseForm({ submitBtnTitle, onSubmit, onCancel }) {
         <View style={styles.amountAndDate}>
           <Input
             label="Amount"
+            isValid={expenseAmount.isValid}
             inputFieldConfgs={{
               keyboardType: "decimal-pad",
               onChangeText: amountHandler,
-              value: expenseAmount,
+              value: expenseAmount.amount,
             }}
           ></Input>
         </View>
         <View style={styles.amountAndDate}>
           <Input
             label="Date"
+            isValid={expenseDate.isValid}
             inputFieldConfgs={{
               keyboardType: "numeric",
               placeholder: "YYYY-MM-DD",
               maxLength: 10,
               onChangeText: dateHandler,
-              value: expenseDate,
+              value: expenseDate.date,
             }}
           ></Input>
         </View>
@@ -65,14 +100,19 @@ export default function ExpenseForm({ submitBtnTitle, onSubmit, onCancel }) {
 
       <Input
         label="Description"
+        isValid={expenseDescription.isValid}
         inputFieldConfgs={{
           keyboardType: "default",
           multiline: true,
           textAlignVertical: "top",
           onChangeText: descriptionHandler,
-          value: expenseDescription,
+          value: expenseDescription.description,
         }}
       ></Input>
+      {!formIsValid && (
+        <Text style={styles.validationText}>Please add valid input!</Text>
+      )}
+
       <View style={styles.buttonsOuterContainer}>
         <View style={styles.buttonContainer}>
           <PrimaryButton bgColor={Colors.primary800} onPress={onCancel}>
@@ -116,5 +156,12 @@ const styles = StyleSheet.create({
     margin: 5,
     flex: 1,
     maxWidth: 150,
+  },
+  validationText: {
+    color: Colors.error500,
+    textAlign: "left",
+    fontFamily: "open-sans-bold",
+    fontSize: 12,
+    margin: 5,
   },
 });

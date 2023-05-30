@@ -13,7 +13,6 @@ export default function ExpensesOutput({
   }, 0);
 
   let content = <Text style={styles.infoText}>{fallbackText}</Text>;
-  console.log(expenses.length);
   if (expenses.length > 0) {
     content = <ExpenseList expenseData={expenses}></ExpenseList>;
   }

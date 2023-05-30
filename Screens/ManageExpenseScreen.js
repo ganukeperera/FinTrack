@@ -9,7 +9,6 @@ import { addExpense, updateExpense } from "../store/expense";
 
 export default function ManageExpenseScreen({ route, navigation }) {
   const editedExpenseId = route.params?.expenseId;
-
   const isEditing = !!editedExpenseId;
   const allExpenses = useSelector((state) => state.reducer.expenses);
   const dispatch = useDispatch();
@@ -22,17 +21,18 @@ export default function ManageExpenseScreen({ route, navigation }) {
 
   function deleteExpenseHandler() {
     const expense = allExpenses.filter((expense) => {
-      // console.log(expense.id + " " + editedExpenseId);
       return expense.id === editedExpenseId;
     });
-    console.log(expense[0].id);
     dispatch(removeExpense({ expense: expense[0] }));
     navigation.goBack();
   }
   function confirmHandler(expensedata) {
     if (isEditing) {
       dispatch(
-        updateExpense({ expense: { ...expensedata, id: editedExpenseId } })
+        updateExpense({
+          id: editedExpenseId,
+          expense: { ...expensedata, id: editedExpenseId },
+        })
       );
     } else {
       dispatch(addExpense({ expense: { ...expensedata, id: Date.now() } }));
@@ -43,12 +43,16 @@ export default function ManageExpenseScreen({ route, navigation }) {
   function cancelHandler() {
     navigation.goBack();
   }
+  const defaultValues = isEditing
+    ? allExpenses.filter((expense) => expense.id === editedExpenseId)
+    : null;
   return (
     <View style={styles.container}>
       <ExpenseForm
         submitBtnTitle={isEditing ? "Update" : "Add"}
         onSubmit={confirmHandler}
         onCancel={cancelHandler}
+        defaultValues={defaultValues ? defaultValues[0] : null}
       ></ExpenseForm>
 
       {isEditing ? (
