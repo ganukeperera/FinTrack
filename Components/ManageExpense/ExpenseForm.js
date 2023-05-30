@@ -24,7 +24,7 @@ export default function ExpenseForm({
     isValid: true,
   });
 
-  const [formIsValid, setFormIsValid] = useState(true);
+  let formIsValid = true;
 
   function amountHandler(amount) {
     setAmount({ amount: amount, isValid: true });
@@ -49,7 +49,7 @@ export default function ExpenseForm({
     const descriptionIsValid = expense.description.trim().length > 0;
 
     if (!amountIsValid || !dateIsValid || !descriptionIsValid) {
-      setFormIsValid(false);
+      formIsValid = false;
       setAmount((curValue) => {
         return { amount: curValue.amount, isValid: amountIsValid };
       });
@@ -63,7 +63,7 @@ export default function ExpenseForm({
         return { date: curValue.date, isValid: dateIsValid };
       });
     } else {
-      setFormIsValid(true);
+      formIsValid = true;
       onSubmit(expense);
     }
   }
