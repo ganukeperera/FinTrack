@@ -36,10 +36,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
     borderRadius: 8,
     elevation: 4,
-    shadowColor: "black",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.5,
-    shadowRadius: 8,
   },
   pressNormal: {
     paddingHorizontal: 15,
@@ -49,6 +45,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 8,
     flex: 1,
+    shadowColor: "black",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.5,
+    shadowRadius: 8,
   },
   pressPressed: {
     opacity: 0.5,
