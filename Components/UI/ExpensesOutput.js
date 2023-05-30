@@ -21,7 +21,7 @@ export default function ExpensesOutput({
     <>
       <HeaderCard
         titleLeft={expensesPeriod}
-        titleRight={"$" + totalExpenses}
+        titleRight={"$" + totalExpenses.toFixed(2)}
       ></HeaderCard>
       {content}
     </>
