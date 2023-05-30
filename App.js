@@ -23,11 +23,14 @@ export default function App() {
       await SplashScreen.hideAsync();
     }
   }, [isFontsLoaded]);
+  if (!isFontsLoaded) {
+    return null;
+  }
 
   const Stack = createNativeStackNavigator();
   return (
     <View style={styles.container} onLayout={onLayoutRootView}>
-      <StatusBar style="light"></StatusBar>
+      {/* <StatusBar style="light"></StatusBar> */}
 
       <Provider store={store}>
         <NavigationContainer>

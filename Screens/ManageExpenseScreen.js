@@ -1,11 +1,11 @@
 import { View, StyleSheet } from "react-native";
-import PrimaryButton from "../Components/UI/PrimaryButton";
 import { Colors } from "../util/Colors";
 import IconButton from "../Components/UI/IconButton";
 import { useLayoutEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { removeExpense } from "../store/expense";
 import ExpenseForm from "../Components/ManageExpense/ExpenseForm";
+import { addExpense, updateExpense } from "../store/expense";
 
 export default function ManageExpenseScreen({ route, navigation }) {
   const editedExpenseId = route.params?.expenseId;
@@ -29,30 +29,28 @@ export default function ManageExpenseScreen({ route, navigation }) {
     dispatch(removeExpense({ expense: expense[0] }));
     navigation.goBack();
   }
-
-  function confirmHandler() {
+  function confirmHandler(expensedata) {
+    if (isEditing) {
+      dispatch(
+        updateExpense({ expense: { ...expensedata, id: editedExpenseId } })
+      );
+    } else {
+      dispatch(addExpense({ expense: { ...expensedata, id: Date.now() } }));
+    }
     navigation.goBack();
   }
 
   function cancelHandler() {
     navigation.goBack();
   }
-
   return (
     <View style={styles.container}>
-      <ExpenseForm></ExpenseForm>
-      <View style={styles.buttonsOuterContainer}>
-        <View style={styles.buttonContainer}>
-          <PrimaryButton bgColor={Colors.primary800} onPress={cancelHandler}>
-            Cancel
-          </PrimaryButton>
-        </View>
-        <View style={styles.buttonContainer}>
-          <PrimaryButton bgColor={Colors.primary500} onPress={confirmHandler}>
-            {isEditing ? "Update" : "Add"}
-          </PrimaryButton>
-        </View>
-      </View>
+      <ExpenseForm
+        submitBtnTitle={isEditing ? "Update" : "Add"}
+        onSubmit={confirmHandler}
+        onCancel={cancelHandler}
+      ></ExpenseForm>
+
       {isEditing ? (
         <View style={styles.iconButtonOuterContainer}>
           <View style={styles.iconButtonContainer}>
@@ -75,16 +73,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.primary800,
     flex: 1,
-  },
-  buttonsOuterContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    margin: 20,
-  },
-  buttonContainer: {
-    margin: 5,
-    flex: 1,
-    maxWidth: 150,
   },
   iconButtonOuterContainer: {
     borderTopColor: "white",
