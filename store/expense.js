@@ -56,17 +56,14 @@ const expenseSlice = createSlice({
     },
     removeExpense: (state, action) => {
       const idArray = state.expenses.map((expense) => expense.id);
-      console.log(action.payload.expense);
       const index = idArray.indexOf(action.payload.expense.id);
 
       state.expenses.splice(index, 1);
     },
     updateExpense: (state, action) => {
-      state.expenses.splice(
-        state.expenses.indexOf(action.payload.id),
-        1,
-        action.payload.expense
-      );
+      const idArray = state.expenses.map((expense) => expense.id);
+      const index = idArray.indexOf(action.payload.id);
+      state.expenses.splice(index, 1, action.payload.expense);
     },
   },
 });
