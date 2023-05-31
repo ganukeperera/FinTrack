@@ -5,6 +5,8 @@ import PrimaryButton from "../UI/PrimaryButton";
 import { Colors } from "../../util/Colors";
 import { useNavigation } from "@react-navigation/native";
 
+let formIsValid = true;
+
 export default function ExpenseForm({
   submitBtnTitle,
   onSubmit,
@@ -23,8 +25,6 @@ export default function ExpenseForm({
     description: defaultValues ? defaultValues.description : "",
     isValid: true,
   });
-
-  let formIsValid = true;
 
   function amountHandler(amount) {
     setAmount({ amount: amount, isValid: true });
